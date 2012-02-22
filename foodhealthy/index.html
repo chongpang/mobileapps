@@ -1,0 +1,90 @@
+  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+                  "http://www.w3.org/TR/html4/strict.dtd">
+    <html>
+      <head>
+        <title>Media Example</title>
+    	<script type="text/javascript" src="sencha-touch/sencha-touch.js"></script>
+   		<link rel="stylesheet" type="text/css" href="sencha-touch/resources/css/sencha-touch.css"/>
+        <script type="text/javascript" charset="utf-8">
+			Ext.regApplication({
+			    name: 'sampleApp',
+			    launch: function() {
+			        this.launched = true;
+			        this.mainLaunch();
+			    },
+			    mainLaunch: function() {
+			        this.views.viewport = new this.views.Viewport();
+			    },
+			    getData: function() {
+			        return data = {
+			            items: [{
+			                title: "ASKUSA EKI",
+			                items: [
+			                    {title:"NICHIBAKOMI",leaf: true},
+			                    {title:"BAKOMI",leaf: true},
+			                    {title:"NKANOBE",leaf: true},
+			                    {title:"TOGOE",leaf: true},
+			                    // 省略
+			                ]},{
+			                title: "MITUSDA",
+			                items: [
+			                    {title:"MEGURU",leaf: true},
+			                    {title:"BAIJINTAI",leaf: true},
+			                    {title:"BIJINGAOLUN",leaf: true},
+			                    {title:"SANTIAN",leaf: true},
+			                    // 省略
+			                ]},{
+			                title: "SINJYUKUSENN",
+			                items: [
+			                    {title:"SHINNJIKUEKI",leaf: true},
+			                    {title:"BEIJING",leaf: true},
+			                    {title:"SHANGHAI",leaf: true},
+			                    {title:"ICHIGYA",leaf: true},
+			                    // 省略
+			                ]},{
+			                title: "OOEDOSENN",
+			                items: [
+			                    {title:"TOCYOEKIMAE",leaf: true},
+			                    {title:"SHINJUKUNICHIKUCHI",leaf: true},
+			                    {title:"HIGASHISINNJYUKU",leaf: true},
+			                    {title:"KAWAMATSUEKI",leaf: true},
+			                    // 省略
+			                ]}
+			            ]
+			        };
+			    }
+			});
+			sampleApp.views.Viewport = Ext.extend(Ext.Panel, {
+			    glossOnIcon: false,
+			    initComponent: function() {
+			        Ext.regModel('model',{
+			            fields:[
+			                {name:'title', type: 'string'},
+			                {name:'items', type: 'array'}
+			            ]
+			        });
+			        var store = new Ext.data.TreeStore({
+			            model: 'model',
+			            root: sampleApp.getData(),
+			            proxy:{
+			                type: 'ajax',
+			                reader:{
+			                    type: 'tree',
+			                    root: 'items'
+			                }
+			            }
+			        });
+			        var list = new Ext.NestedList({
+			            fullscreen: true,
+			            title: 'SmartPhone',
+			            displayField: 'title',
+			            store: store
+			        });
+			    }
+			});
+			document.addEventListener("deviceready", sampleApp.mainLaunch, false);
+        </script>
+      </head>
+      <body>
+      </body>
+    </html>
